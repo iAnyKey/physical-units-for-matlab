@@ -1,5 +1,9 @@
 function v1 = mtimes(v1,v2)
 
+% import functions in case if repository has been includen in a package.
+% if not - `import .*` does nothing 
+eval(sprintf('import %s.*', strjoin(regexp(mfilename('fullpath'), '(?<=+)\w*', 'match'), '.')));
+
 if ~isa(v2,'DimVar') % v1 is the only DimVar.
     v1.value = v1.value * v2;
 elseif ~isa(v1,'DimVar') % v2 is the only DimVar.

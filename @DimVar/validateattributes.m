@@ -1,6 +1,10 @@
 function validateattributes(a,classes,varargin)
 % Categorize DimVar as numeric for purposes of validating attributes.
 
+% import functions in case if repository has been includen in a package.
+% if not - `import .*` does nothing 
+eval(sprintf('import %s.*', strjoin(regexp(mfilename('fullpath'), '(?<=+)\w*', 'match'), '.')));
+
 if any(strcmp('numeric',classes)) || any(strcmp('DimVar',classes))
     % DimVar is allowed. Evaluate against value.
     

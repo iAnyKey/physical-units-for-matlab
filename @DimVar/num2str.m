@@ -1,5 +1,9 @@
 function [s] = num2str(v, varargin)
 
+% import functions in case if repository has been includen in a package.
+% if not - `import .*` does nothing 
+eval(sprintf('import %s.*', strjoin(regexp(mfilename('fullpath'), '(?<=+)\w*', 'match'), '.')));
+
 ST = dbstack(1,'-completenames');
 if isequal(varargin,{'%d    '}) && ...
         contains(ST(1).file,['@tabular' filesep 'disp.m'])

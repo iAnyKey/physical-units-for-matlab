@@ -1,6 +1,10 @@
 function Vq = interpn(varargin)
 % See also interpn.
 
+% import functions in case if repository has been includen in a package.
+% if not - `import .*` does nothing 
+eval(sprintf('import %s.*', strjoin(regexp(mfilename('fullpath'), '(?<=+)\w*', 'match'), '.')));
+
 nArgs = nargin;
 if isnumeric(varargin{end}) && isscalar(varargin{end}) ...
         && (ischar(varargin{end-1}) ...

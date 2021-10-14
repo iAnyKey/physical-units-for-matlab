@@ -28,6 +28,10 @@ function v = naturaldisplay(v,lists)
 % 
 %   See also DimVar.scd, u, iscompatible.
 
+% import functions in case if repository has been includen in a package.
+% if not - `import .*` does nothing 
+eval(sprintf('import %s.*', strjoin(regexp(mfilename('fullpath'), '(?<=+)\w*', 'match'), '.')));
+
 if nargin < 2
     lists = {
         ["um" "mm" "cm" "m" "km" "au" "lightYear"]

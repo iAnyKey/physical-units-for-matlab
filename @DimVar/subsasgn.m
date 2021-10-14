@@ -16,6 +16,10 @@ function v1 = subsasgn(v1,S,v2)
 % subsasgn. I've done what testing I can, and the 6 most common cases all
 % have the desired behavior. However, please report unexpected behavior.
 
+% import functions in case if repository has been includen in a package.
+% if not - `import .*` does nothing 
+eval(sprintf('import %s.*', strjoin(regexp(mfilename('fullpath'), '(?<=+)\w*', 'match'), '.')));
+
 if isempty(v1) && ~isa(v1,'DimVar')
     % Covers new variable case. I do not know any way to detect the difference
     % between a new variable and simply v1 = [].

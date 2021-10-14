@@ -58,6 +58,9 @@ classdef (InferiorClasses = {?DimVar}) OffsetDimVar
         end
         
         function v = times(v1,v2)
+            % import functions in case if repository has been includen in a package.
+            % if not - `import .*` does nothing 
+            eval(sprintf('import %s.*', strjoin(regexp(mfilename('fullpath'), '(?<=+)\w*', 'match'), '.')));
             if ~isa(v2,'OffsetDimVar') % v1 is only OffsetDimVar
                 v = scd(v2 .* v1.dv + v1.offset,v1.customDisplay);
             elseif ~isa(v1,'OffsetDimVar') % v2 is only OffsetDimVar
@@ -68,10 +71,16 @@ classdef (InferiorClasses = {?DimVar}) OffsetDimVar
             end
         end
         function v = mtimes(v1,v2)
+            % import functions in case if repository has been includen in a package.
+            % if not - `import .*` does nothing 
+            eval(sprintf('import %s.*', strjoin(regexp(mfilename('fullpath'), '(?<=+)\w*', 'match'), '.')));            
             v = times(v1,v2);
         end
         
         function v = rdivide(v1,v2)
+            % import functions in case if repository has been includen in a package.
+            % if not - `import .*` does nothing 
+            eval(sprintf('import %s.*', strjoin(regexp(mfilename('fullpath'), '(?<=+)\w*', 'match'), '.')));
             if ~isa(v2,'OffsetDimVar') % v1 is only OffsetDimVar
                 error('OffsetDimVar:undefined',...
                     'Division of an offset physical unit is undefined.')
@@ -82,6 +91,9 @@ classdef (InferiorClasses = {?DimVar}) OffsetDimVar
             end
         end
         function v = mrdivide(v1,v2)
+            % import functions in case if repository has been includen in a package.
+            % if not - `import .*` does nothing 
+            eval(sprintf('import %s.*', strjoin(regexp(mfilename('fullpath'), '(?<=+)\w*', 'match'), '.')));
             v = rdivide(v1,v2);
         end
     end

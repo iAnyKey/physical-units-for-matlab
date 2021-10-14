@@ -24,6 +24,11 @@ function [cTo,cInverse] = unitconversionfactor(from,to,varargin)
 % This implementation using symunit2str my cause issues for some situations
 % where the unit names might not line up between u and symunit. This is accepted
 % due to the capabilities introduced.
+
+% import functions in case if repository has been includen in a package.
+% if not - `import .*` does nothing 
+eval(sprintf('import %s.*', strjoin(regexp(mfilename('fullpath'), '(?<=+)\w*', 'match'), '.')));
+
 if isa(from,'sym')
     from = symunit2str(from);
 end

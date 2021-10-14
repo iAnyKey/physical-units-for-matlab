@@ -5,6 +5,10 @@ function v = duration2u(d)
 % 
 %   See also duration, seconds, units, u.
 
+% import functions in case if repository has been includen in a package.
+% if not - `import .*` does nothing
+eval(sprintf('import %s.*', strjoin(regexp(mfilename('fullpath'), '(?<=+)\w*', 'match'), '.')));
+
 if isduration(d)
     v = u.s*seconds(d);
     switch d.Format

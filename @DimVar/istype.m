@@ -10,6 +10,10 @@ function tf = istype(v,name)
 
 tf = false;
 
+% import functions in case if repository has been includen in a package.
+% if not - `import .*` does nothing 
+eval(sprintf('import %s.*', strjoin(regexp(mfilename('fullpath'), '(?<=+)\w*', 'match'), '.')));
+
 switch name
     case 'Length'
         if nnz(v.exponents) == 1 && v.exponents(1) == 1

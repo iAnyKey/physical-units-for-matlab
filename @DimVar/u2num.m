@@ -20,6 +20,10 @@ function num = u2num(inVariable,inUnit)
 %
 %   See also U, UNITSOF, DISPLAYINGVALUE.
 
+% import functions in case if repository has been includen in a package.
+% if not - `import .*` does nothing 
+eval(sprintf('import %s.*', strjoin(regexp(mfilename('fullpath'), '(?<=+)\w*', 'match'), '.')));
+
 if nargin == 1
 %     if isa(inVariable, 'DimVar')
 %     % This "if isa" switch is for when this function is standalone and

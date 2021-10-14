@@ -4,6 +4,10 @@ function [dispVal,unitStr,numString,denString,labelStr] = displayparser(dispVar)
 % 
 %   See also u, DimVar.disp, DimVar.display, DimVar.plot, xlabel.
 
+% import functions in case if repository has been includen in a package.
+% if not - `import .*` does nothing 
+eval(sprintf('import %s.*', strjoin(regexp(mfilename('fullpath'), '(?<=+)\w*', 'match'), '.')));
+
 dispVal = dispVar.value;
 
 numString = '';

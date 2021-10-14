@@ -12,6 +12,11 @@ function varargout = plotfunctionwrapper(plotFunction,varargin)
 %     AddSecondAxis - http://www.mathworks.com/matlabcentral/fileexchange/38852,
 %     addaxis_unit  - http://www.mathworks.com/matlabcentral/fileexchange/26928.
 
+% import functions in case if repository has been includen in a package.
+% if not - `import .*` does nothing
+if isempty(which('str2u'))
+    eval(sprintf('import %s.*', strjoin(regexp(mfilename('fullpath'), '(?<=+)\w*', 'match'), '.')));
+end
 
 %% Determine if first input is axes.
 args = varargin;

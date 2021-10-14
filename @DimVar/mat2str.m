@@ -7,6 +7,9 @@ function str = mat2str(dv,varargin)
 %   Sky Sartorius 
 %   www.mathworks.com/matlabcentral/fileexchange/authors/101715
 
+% import functions in case if repository has been includen in a package.
+% if not - `import .*` does nothing 
+eval(sprintf('import %s.*', strjoin(regexp(mfilename('fullpath'), '(?<=+)\w*', 'match'), '.')));
 
 [dispVal,unitStr] = displayparser(dv);
 

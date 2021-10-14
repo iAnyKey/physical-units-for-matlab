@@ -4,6 +4,10 @@ function [tf,ME] = iscompatible(varargin)
 % 
 %   See also u, compatible.
 
+% import functions in case if repository has been includen in a package.
+% if not - `import .*` does nothing
+eval(sprintf('import %s.*', strjoin(regexp(mfilename('fullpath'), '(?<=+)\w*', 'match'), '.')));
+
 try 
     compatible(varargin{:});
     tf = true;

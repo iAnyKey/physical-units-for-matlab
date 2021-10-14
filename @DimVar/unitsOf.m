@@ -17,6 +17,10 @@ function [uv,us] = unitsOf(v)
 % 
 %   See also U, U2NUM. DISPLAYINGVALUE.
 
+% import functions in case if repository has been includen in a package.
+% if not - `import .*` does nothing 
+eval(sprintf('import %s.*', strjoin(regexp(mfilename('fullpath'), '(?<=+)\w*', 'match'), '.')));
+
 uv = DimVar(v.exponents,1);
 
 if nargout > 1

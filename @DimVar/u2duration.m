@@ -13,6 +13,10 @@ function d = u2duration(v)
 % 
 %   See also duration, seconds, u, u2num.
 
+% import functions in case if repository has been includen in a package.
+% if not - `import .*` does nothing 
+eval(sprintf('import %s.*', strjoin(regexp(mfilename('fullpath'), '(?<=+)\w*', 'match'), '.')));
+
 if isa(v/u.s,'DimVar')
     error('A pure time DimVar (with exponent of one) is required.')
 else

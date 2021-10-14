@@ -34,6 +34,10 @@ if ~isnan(out)
     return 
 end
 
+% import functions in case if repository has been includen in a package.
+% if not - `import .*` does nothing 
+eval(sprintf('import %s.*', strjoin(regexp(mfilename('fullpath'), '(?<=+)\w*', 'match'), '.')));
+
 %% Parse inputs.
 if isstring(inStr) && ~isscalar(inStr)
     out = arrayfun(@str2u,inStr,'UniformOutput',0);
