@@ -1,12 +1,15 @@
 function v1 = mrdivide(v1,v2)
 
-% import functions in case if repository has been includen in a package.
-% if not - `import .*` does nothing 
-eval(sprintf('import %s.*', strjoin(regexp(mfilename('fullpath'), '(?<=+)\w*', 'match'), '.')));
-
-if ~isa(v2,'DimVar') % v1 is the only DimVar.
+% handle the case of being callsed out of package
+sClassName = 'DimVar';
+sPkgName = strjoin(regexp(mfilename('fullpath'), '(?<=+)\w*', 'match'), '.');
+if ~isempty(sPkgName)
+    sClassName = [sPkgName '.' sClassName];
+end
+    
+if ~isa(v2,sClassName) % v1 is the only DimVar.
     v1.value = v1.value/v2;   
-elseif ~isa(v1,'DimVar') % v2 is the only DimVar.
+elseif ~isa(v1,sClassName) % v2 is the only DimVar.
     v2.value = v1/v2.value;
     v2.exponents = - v2.exponents;
     v1 = v2;
