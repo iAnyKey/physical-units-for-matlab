@@ -14,8 +14,8 @@ function varargout = plotfunctionwrapper(plotFunction,varargin)
 
 % import functions in case if repository has been includen in a package.
 % if not - `import .*` does nothing
-if isempty(which('str2u'))
-    eval(sprintf('import %s.*', strjoin(regexp(mfilename('fullpath'), '(?<=+)\w*', 'match'), '.')));
+if isempty(which('plottingvalue'))
+    eval(sprintf('import %s.plottingvalue', strjoin(regexp(mfilename('fullpath'), '(?<=+)\w*', 'match'), '.')));
 end
 
 %% Determine if first input is axes.
@@ -328,6 +328,8 @@ end
 end
 
 function args = harmonize(args)
+eval(sprintf('import %s.*', strjoin(regexp(mfilename('fullpath'), '(?<=+)\w*', 'match'), '.')));% import functions in case if repository has been includen in a package. if not - `import .*` does nothing 
+
 compatible(args{:});
 if isa(args{1},'DimVar')
     dominantUnit = args{1}.customDisplay;

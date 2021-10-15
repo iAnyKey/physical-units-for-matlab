@@ -16,17 +16,24 @@ function v1 = subsasgn(v1,S,v2)
 % subsasgn. I've done what testing I can, and the 6 most common cases all
 % have the desired behavior. However, please report unexpected behavior.
 
+% handle the case of being callsed out of package
+sClassName = 'DimVar';
+sPkgName = strjoin(regexp(mfilename('fullpath'), '(?<=+)\w*', 'match'), '.');
+if ~isempty(sPkgName)
+    sClassName = [sPkgName '.' sClassName];
+end
+
 % import functions in case if repository has been includen in a package.
 % if not - `import .*` does nothing 
 eval(sprintf('import %s.*', strjoin(regexp(mfilename('fullpath'), '(?<=+)\w*', 'match'), '.')));
 
-if isempty(v1) && ~isa(v1,'DimVar')
+if isempty(v1) && ~isa(v1,sClassName)
     % Covers new variable case. I do not know any way to detect the difference
     % between a new variable and simply v1 = [].
     v1 = []*scd(DimVar(v2.exponents,1),v2.customDisplay);
 end
 
-if isa(v2,'DimVar')
+if isa(v2,sClassName)
     if isequal(v2.exponents,v1.exponents)
             v1.value(S.subs{:}) = v2.value;
     else

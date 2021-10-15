@@ -2,9 +2,9 @@ function display(v) %#ok<DISPLAY>
 % This method is purely for more aesthetic display of DimVars in the command
 % window. It is not necessary, as disp is already overloaded.
 
-% import functions in case if repository has been includen in a package.
-% if not - `import .*` does nothing 
-eval(sprintf('import %s.*', strjoin(regexp(mfilename('fullpath'), '(?<=+)\w*', 'match'), '.')));
+% % import functions in case if repository has been includen in a package.
+% % if not - `import .*` does nothing 
+% eval(sprintf('import %s.*', strjoin(regexp(mfilename('fullpath'), '(?<=+)\w*', 'match'), '.')));
 
 % Note: display used to contain important functionality with the syntax:
 % [numeratorString, denominatorString, v] = display(v).

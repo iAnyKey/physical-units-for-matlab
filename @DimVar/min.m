@@ -1,8 +1,8 @@
 function [v1,I] = min(v1,varargin)
 
-% import functions in case if repository has been includen in a package.
-% if not - `import .*` does nothing 
-eval(sprintf('import %s.*', strjoin(regexp(mfilename('fullpath'), '(?<=+)\w*', 'match'), '.')));
+% % import functions in case if repository has been includen in a package.
+% % if not - `import .*` does nothing 
+% eval(sprintf('import %s.*', strjoin(regexp(mfilename('fullpath'), '(?<=+)\w*', 'match'), '.')));
 
 if nargin == 1
     [v1.value, I] = min(v1.value);

@@ -10,9 +10,9 @@ function tf = istype(v,name)
 
 tf = false;
 
-% import functions in case if repository has been includen in a package.
-% if not - `import .*` does nothing 
-eval(sprintf('import %s.*', strjoin(regexp(mfilename('fullpath'), '(?<=+)\w*', 'match'), '.')));
+% % import functions in case if repository has been includen in a package.
+% % if not - `import .*` does nothing 
+% eval(sprintf('import %s.*', strjoin(regexp(mfilename('fullpath'), '(?<=+)\w*', 'match'), '.')));
 
 switch name
     case 'Length'
@@ -68,5 +68,10 @@ switch name
             tf = true;
         end
     otherwise
+        % handle the case of being callsed out of package
+        sPkgName = strjoin(regexp(mfilename('fullpath'), '(?<=+)\w*', 'match'), '.');
+        if ~isempty(sPkgName)
+            name = [sPkgName '.' name];
+        end
         tf = isa(v,name);
 end

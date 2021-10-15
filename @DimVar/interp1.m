@@ -1,9 +1,9 @@
 function Vout = interp1(varargin)
 % See also interp1.
 
-% import functions in case if repository has been includen in a package.
-% if not - `import .*` does nothing 
-eval(sprintf('import %s.*', strjoin(regexp(mfilename('fullpath'), '(?<=+)\w*', 'match'), '.')));
+% % import functions in case if repository has been includen in a package.
+% % if not - `import .*` does nothing 
+% eval(sprintf('import %s.*', strjoin(regexp(mfilename('fullpath'), '(?<=+)\w*', 'match'), '.')));
 
 
 if nargin == 2

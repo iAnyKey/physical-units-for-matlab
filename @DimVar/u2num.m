@@ -20,9 +20,16 @@ function num = u2num(inVariable,inUnit)
 %
 %   See also U, UNITSOF, DISPLAYINGVALUE.
 
-% import functions in case if repository has been includen in a package.
-% if not - `import .*` does nothing 
-eval(sprintf('import %s.*', strjoin(regexp(mfilename('fullpath'), '(?<=+)\w*', 'match'), '.')));
+% % import functions in case if repository has been includen in a package.
+% % if not - `import .*` does nothing 
+% eval(sprintf('import %s.*', strjoin(regexp(mfilename('fullpath'), '(?<=+)\w*', 'match'), '.')));
+
+% handle the case of being callsed out of package
+sClassName = 'DimVar';
+sPkgName = strjoin(regexp(mfilename('fullpath'), '(?<=+)\w*', 'match'), '.');
+if ~isempty(sPkgName)
+    sClassName = [sPkgName '.' sClassName];
+end
 
 if nargin == 1
 %     if isa(inVariable, 'DimVar')
@@ -34,7 +41,7 @@ if nargin == 1
 %     end
 else
     num = inVariable/inUnit;
-    if isa(num,'DimVar')
+    if isa(num,sClassName)
         error('Incompatible input dimensions')
     end
 end

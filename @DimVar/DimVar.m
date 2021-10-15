@@ -55,7 +55,14 @@ methods
         % Note: This must be both a function and a DimVar method so that the
         % method can access the exponents property.
         
-        if ~isa(v,'DimVar')
+        % handle the case of being callsed out of package
+        sClassName = 'DimVar';
+        sPkgName = strjoin(regexp(mfilename('fullpath'), '(?<=+)\w*', 'match'), '.');
+        if ~isempty(sPkgName)
+            sClassName = [sPkgName '.' sClassName];
+        end
+        
+        if ~isa(v,sClassName)
             
             ME = MException('DimVar:incompatibleUnits',...
                 ['Incompatible units. Cannot perform operation on '...
@@ -68,7 +75,7 @@ methods
         
         for i = 1:numel(varargin)
             
-            if ~isa(varargin{i},'DimVar') ...
+            if ~isa(varargin{i},sClassName) ...
                     || ~isequal(vExpos,varargin{i}.exponents)
                 
                 ME = MException('DimVar:incompatibleUnits',...
@@ -82,7 +89,14 @@ methods
     
     %% Concatenation.
     function v = cat(dim,v,varargin)
-        if ~isa(v,'DimVar')
+        % handle the case of being callsed out of package
+        sClassName = 'DimVar';
+        sPkgName = strjoin(regexp(mfilename('fullpath'), '(?<=+)\w*', 'match'), '.');
+        if ~isempty(sPkgName)
+            sClassName = [sPkgName '.' sClassName];
+        end
+        
+        if ~isa(v,sClassName)
             ME = MException('DimVar:incompatibleUnits',...
                 'Incompatible units. All inputs must be DimVar.');
             throwAsCaller(ME);
@@ -93,7 +107,7 @@ methods
         for i = 1:numel(varargin)
             vi = varargin{i};
             
-            if ~isa(vi,'DimVar') || ~isequal(vExpos,vi.exponents)
+            if ~isa(vi,sClassName) || ~isequal(vExpos,vi.exponents)
                 ME = MException('DimVar:incompatibleUnits',...
                     ['Incompatible units. Cannot perform operation on '...
                     'variables with different units.']);
@@ -114,31 +128,31 @@ methods
     
     %% Validation functions (mustBe__).
     function mustBeGreaterThan(v1,v2)
-        % import functions in case if repository has been includen in a package.
-        % if not - `import .*` does nothing
-        eval(sprintf('import %s.*', strjoin(regexp(mfilename('fullpath'), '(?<=+)\w*', 'match'), '.')));
+%         % import functions in case if repository has been includen in a package.
+%         % if not - `import .*` does nothing
+%         eval(sprintf('import %s.*', strjoin(regexp(mfilename('fullpath'), '(?<=+)\w*', 'match'), '.')));
 
         compatible(v1,v2);
         mustBeGreaterThan(v1.value,v2.value);
     end
     function mustBeGreaterThanOrEqual(v1,v2)
-        % import functions in case if repository has been includen in a package.
-        % if not - `import .*` does nothing
-        eval(sprintf('import %s.*', strjoin(regexp(mfilename('fullpath'), '(?<=+)\w*', 'match'), '.')));
+%         % import functions in case if repository has been includen in a package.
+%         % if not - `import .*` does nothing
+%         eval(sprintf('import %s.*', strjoin(regexp(mfilename('fullpath'), '(?<=+)\w*', 'match'), '.')));
         compatible(v1,v2);
         mustBeGreaterThanOrEqual(v1.value,v2.value);
     end
     function mustBeLessThan(v1,v2)
-        % import functions in case if repository has been includen in a package.
-        % if not - `import .*` does nothing
-        eval(sprintf('import %s.*', strjoin(regexp(mfilename('fullpath'), '(?<=+)\w*', 'match'), '.')));
+%         % import functions in case if repository has been includen in a package.
+%         % if not - `import .*` does nothing
+%         eval(sprintf('import %s.*', strjoin(regexp(mfilename('fullpath'), '(?<=+)\w*', 'match'), '.')));
         compatible(v1,v2);
         mustBeLessThan(v1.value,v2.value);
     end
     function mustBeLessThanOrEqual(v1,v2)
-        % import functions in case if repository has been includen in a package.
-        % if not - `import .*` does nothing
-        eval(sprintf('import %s.*', strjoin(regexp(mfilename('fullpath'), '(?<=+)\w*', 'match'), '.')));
+%         % import functions in case if repository has been includen in a package.
+%         % if not - `import .*` does nothing
+%         eval(sprintf('import %s.*', strjoin(regexp(mfilename('fullpath'), '(?<=+)\w*', 'match'), '.')));
         compatible(v1,v2);
         mustBeLessThanOrEqual(v1.value,v2.value);
     end
@@ -158,51 +172,51 @@ methods
     
     %% Logical operators (>, <, ==, ~, etc.).
     function result = eq(v1,v2)
-        % import functions in case if repository has been includen in a package.
-        % if not - `import .*` does nothing
-        eval(sprintf('import %s.*', strjoin(regexp(mfilename('fullpath'), '(?<=+)\w*', 'match'), '.')));
+%         % import functions in case if repository has been includen in a package.
+%         % if not - `import .*` does nothing
+%         eval(sprintf('import %s.*', strjoin(regexp(mfilename('fullpath'), '(?<=+)\w*', 'match'), '.')));
         compatible(v1,v2);
         result = v1.value == v2.value;
     end
     function result = ge(v1,v2)
-        % import functions in case if repository has been includen in a package.
-        % if not - `import .*` does nothing
-        eval(sprintf('import %s.*', strjoin(regexp(mfilename('fullpath'), '(?<=+)\w*', 'match'), '.')));
+%         % import functions in case if repository has been includen in a package.
+%         % if not - `import .*` does nothing
+%         eval(sprintf('import %s.*', strjoin(regexp(mfilename('fullpath'), '(?<=+)\w*', 'match'), '.')));
         compatible(v1,v2);
         result = v1.value >= v2.value;
     end
     function result = gt(v1,v2)
-        % import functions in case if repository has been includen in a package.
-        % if not - `import .*` does nothing
-        eval(sprintf('import %s.*', strjoin(regexp(mfilename('fullpath'), '(?<=+)\w*', 'match'), '.')));
+%         % import functions in case if repository has been includen in a package.
+%         % if not - `import .*` does nothing
+%         eval(sprintf('import %s.*', strjoin(regexp(mfilename('fullpath'), '(?<=+)\w*', 'match'), '.')));
         compatible(v1,v2);
         result = v1.value > v2.value;
     end
     function result = le(v1,v2)
-        % import functions in case if repository has been includen in a package.
-        % if not - `import .*` does nothing
-        eval(sprintf('import %s.*', strjoin(regexp(mfilename('fullpath'), '(?<=+)\w*', 'match'), '.')));
+%         % import functions in case if repository has been includen in a package.
+%         % if not - `import .*` does nothing
+%         eval(sprintf('import %s.*', strjoin(regexp(mfilename('fullpath'), '(?<=+)\w*', 'match'), '.')));
         compatible(v1,v2);
         result = v1.value <= v2.value;
     end
     function result = lt(v1,v2)
-        % import functions in case if repository has been includen in a package.
-        % if not - `import .*` does nothing
-        eval(sprintf('import %s.*', strjoin(regexp(mfilename('fullpath'), '(?<=+)\w*', 'match'), '.')));
+%         % import functions in case if repository has been includen in a package.
+%         % if not - `import .*` does nothing
+%         eval(sprintf('import %s.*', strjoin(regexp(mfilename('fullpath'), '(?<=+)\w*', 'match'), '.')));
         compatible(v1,v2);
         result = v1.value < v2.value;
     end
     function result = ne(v1,v2)
-        % import functions in case if repository has been includen in a package.
-        % if not - `import .*` does nothing
-        eval(sprintf('import %s.*', strjoin(regexp(mfilename('fullpath'), '(?<=+)\w*', 'match'), '.')));
+%         % import functions in case if repository has been includen in a package.
+%         % if not - `import .*` does nothing
+%         eval(sprintf('import %s.*', strjoin(regexp(mfilename('fullpath'), '(?<=+)\w*', 'match'), '.')));
         compatible(v1,v2);
         result = v1.value ~= v2.value;
     end
     function result = not(v)
-        % import functions in case if repository has been includen in a package.
-        % if not - `import .*` does nothing
-        eval(sprintf('import %s.*', strjoin(regexp(mfilename('fullpath'), '(?<=+)\w*', 'match'), '.')));
+%         % import functions in case if repository has been includen in a package.
+%         % if not - `import .*` does nothing
+%         eval(sprintf('import %s.*', strjoin(regexp(mfilename('fullpath'), '(?<=+)\w*', 'match'), '.')));
         result = ~v.value;
     end
     
@@ -253,30 +267,30 @@ methods
     
     %% Functions that require compatibility check.
     function out = atan2(v1,v2)
-        % import functions in case if repository has been includen in a package.
-        % if not - `import .*` does nothing 
-        eval(sprintf('import %s.*', strjoin(regexp(mfilename('fullpath'), '(?<=+)\w*', 'match'), '.')));
+%         % import functions in case if repository has been includen in a package.
+%         % if not - `import .*` does nothing 
+%         eval(sprintf('import %s.*', strjoin(regexp(mfilename('fullpath'), '(?<=+)\w*', 'match'), '.')));
         compatible(v1,v2);
         out = atan2(v1.value, v2.value);
     end
     function v1 = hypot(v1,v2)
-        % import functions in case if repository has been includen in a package.
-        % if not - `import .*` does nothing 
-        eval(sprintf('import %s.*', strjoin(regexp(mfilename('fullpath'), '(?<=+)\w*', 'match'), '.')));
+%         % import functions in case if repository has been includen in a package.
+%         % if not - `import .*` does nothing 
+%         eval(sprintf('import %s.*', strjoin(regexp(mfilename('fullpath'), '(?<=+)\w*', 'match'), '.')));
         compatible(v1,v2);
         v1.value = hypot(v1.value,v2.value);
     end
     function v1 = minus(v1,v2)
-        % import functions in case if repository has been includen in a package.
-        % if not - `import .*` does nothing 
-        eval(sprintf('import %s.*', strjoin(regexp(mfilename('fullpath'), '(?<=+)\w*', 'match'), '.')));
+%         % import functions in case if repository has been includen in a package.
+%         % if not - `import .*` does nothing 
+%         eval(sprintf('import %s.*', strjoin(regexp(mfilename('fullpath'), '(?<=+)\w*', 'match'), '.')));
         compatible(v1,v2);
         v1.value = v1.value - v2.value;
     end
     function v1 = plus(v1,v2)
-        % import functions in case if repository has been includen in a package.
-        % if not - `import .*` does nothing 
-        eval(sprintf('import %s.*', strjoin(regexp(mfilename('fullpath'), '(?<=+)\w*', 'match'), '.')));
+%         % import functions in case if repository has been includen in a package.
+%         % if not - `import .*` does nothing 
+%         eval(sprintf('import %s.*', strjoin(regexp(mfilename('fullpath'), '(?<=+)\w*', 'match'), '.')));
         compatible(v1,v2);
         v1.value = v1.value + v2.value;
     end

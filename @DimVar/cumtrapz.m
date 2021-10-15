@@ -1,15 +1,22 @@
 function vOut = cumtrapz(v1,v2,varargin)
 
-% import functions in case if repository has been includen in a package.
-% if not - `import .*` does nothing 
-eval(sprintf('import %s.*', strjoin(regexp(mfilename('fullpath'), '(?<=+)\w*', 'match'), '.')));
+% % import functions in case if repository has been includen in a package.
+% % if not - `import .*` does nothing 
+% eval(sprintf('import %s.*', strjoin(regexp(mfilename('fullpath'), '(?<=+)\w*', 'match'), '.')));
 
-if ~isa(v2,'DimVar') % v1 is the DimVar.
+% handle the case of being callsed out of package
+sClassName = 'DimVar';
+sPkgName = strjoin(regexp(mfilename('fullpath'), '(?<=+)\w*', 'match'), '.');
+if ~isempty(sPkgName)
+    sClassName = [sPkgName '.' sClassName];
+end
+
+if ~isa(v2,sClassName) % v1 is the DimVar.
     vOut = v1;
     vOut.value = cumtrapz(v1.value,v2,varargin{:});
 
 
-elseif ~isa(v1,'DimVar') % v2 is the DimVar.
+elseif ~isa(v1,sClassName) % v2 is the DimVar.
     vOut = v2;
     vOut.value = cumtrapz(v1,v2.value,varargin{:});
 

@@ -17,7 +17,14 @@ function d = u2duration(v)
 % if not - `import .*` does nothing 
 eval(sprintf('import %s.*', strjoin(regexp(mfilename('fullpath'), '(?<=+)\w*', 'match'), '.')));
 
-if isa(v/u.s,'DimVar')
+% handle the case of being callsed out of package
+sClassName = 'DimVar';
+sPkgName = strjoin(regexp(mfilename('fullpath'), '(?<=+)\w*', 'match'), '.');
+if ~isempty(sPkgName)
+    sClassName = [sPkgName '.' sClassName];
+end
+
+if isa(v/u.s,sClassName)
     error('A pure time DimVar (with exponent of one) is required.')
 else
     [~,unitStr] = displayparser(v);
