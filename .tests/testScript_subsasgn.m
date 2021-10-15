@@ -58,7 +58,7 @@ shoulderror('DimVar:incompatibleUnits','ve(3) = u.kg;');
 %% expected to fail: assign dim to empty norm (doesn't call overloaded method)
 ve = [];
 ve(3) = u.m;
-assert(isequal(ve,u.m*[0 0 1]))
+shoulderror("assert(isequal(ve,u.m*[0 0 1]))");
 
 %% assign dim to empty normal, subsasgn call
 ve = [];
@@ -69,7 +69,7 @@ assert(isequal(ve,u.m*[0 0 9]))
 
 %% expected to fail: assign dim to normal (doesn't call overloaded method)
 v1 = 1:4;
-shoulderror("v1([2,6]) = 9*u.lb;")
+shoulderror("v1([2,6]) = 9*u.lb;")%FIXME: something is wrong over here - no error has been thrown and this statement works well for me
 
 %% assign dim to normal, subsasgn call
 v1 = 1:4;
@@ -85,4 +85,4 @@ assert(isequal(v,u.kg*[0 0 1]))
 %% expected to fail: assign DimVar to NaN (doesn't call overloaded method)
 v1n = NaN(1,4);
 v1n(3) = u.m;
-assert(isequal(v1n,u.m*[NaN NaN 1 NaN]));
+shoulderror("assert(isequal(v1n,u.m*[NaN NaN 1 NaN]))");
